@@ -1,0 +1,31 @@
+.container{
+    /* display: flex; */
+    display: inline-block;
+    flex-direction: column;
+    border: 1px solid black;
+    padding: 1rem;
+}
+
+
+.display{
+    border: 1px solid black;
+    height: 4rem;
+    text-align: right;
+    font-family:monospace;
+}
+
+.button{
+    height: 3rem;
+    width: 3rem;
+    border: 1px solid black;
+    text-align: center;
+    cursor: pointer;
+}
+.button:hover{
+    transform: scale(1.05);
+    border-radius: 3px;
+}
+
+.button-row{
+    display: flex;
+}
