@@ -6,47 +6,50 @@ const equalsButton = document.querySelector(".equals");
 const display = document.querySelector(".display h2")
 
 let formedNumber = "";
-let storedValue = undefined;
-let lastSelectedOp = "";
-
-function doOperation(formedNumber, storedValue, operation) {
-    switch(operation){
-        case '+':
-            return (storedValue ?? 0) + Number.parseFloat(formedNumber);
-            break;
-        case '-':
-            return (storedValue ?? 0) + Number.parseFloat(formedNumber);
-            break;
-        case '*':
-            return (storedValue ?? 1) * Number.parseFloat(formedNumber);
-            break;
-        case '/':
-            return (storedValue ?? 1) / Number.parseFloat(formedNumber);
-            break; 
-    }
-}
-
-operators.forEach(operator => {
-    operator.addEventListener('click', (e) => {
-        lastSelectedOp = operator.textContent;
-        storedValue = doOperation(formedNumber, storedValue, lastSelectedOp);
-        console.log("formed number value -> " + storedValue);
-        console.log("stored value -> " + storedValue);
-        formedNumber = "";
-        display.textContent = '';
-    })
-})
+let storedResult = null;
+let lastOpUsed = "";
 
 numbers.forEach((number) => {
     number.addEventListener('click', (e) => {
-        formedNumber += number.textContent;
-        display.textContent += number.textContent;
+        formedNumber += e.target.textContent;
+        display.textContent = formedNumber;
+    })
+})
+
+const calculate = (op) => {
+        formedNumber = Number.parseFloat(formedNumber) || null;
+        console.log("formed parsed " + formedNumber + " type --> " + typeof(formedNumber));
+        console.log("stored " + storedResult + " type --> " + typeof(storedResult));
+        switch(op){
+            case "+":
+                storedResult = (storedResult ?? 0) + (formedNumber ?? 0);
+                break;
+            case "-":
+                storedResult = (storedResult ?? formedNumber*2) - (formedNumber ?? 0);
+                break;
+            case "*":
+                storedResult = (storedResult ?? 1) * (formedNumber ?? 1);
+                break;
+            case "/":
+                storedResult = (storedResult ?? 1) / (formedNumber ?? 1);
+                break;
+            default:
+                break;
+        }
+        formedNumber = "";
+}
+
+operators.forEach((op) => {
+    op.addEventListener('click', (e) => {
+        lastOpUsed = e.target.textContent;
+        calculate(lastOpUsed);
     })
 })
 
 equalsButton.addEventListener("click", () => {
-    storedValue = doOperation(formedNumber, storedValue, lastSelectedOp);
-    console.log("formed number value -> " + storedValue);
-    console.log("stored value -> " + storedValue);
-    display.textContent = storedValue;
+    calculate(lastOpUsed);
+    console.log("formed parsed " + formedNumber);
+    console.log("stored " + storedResult);
+    formedNumber = "";
+    display.textContent = storedResult;
 })
