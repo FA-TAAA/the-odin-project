@@ -1,7 +1,5 @@
 "use strict"
 
-
-
 function Gameboard() {
     const board = [
         [" ", " ", " "],
@@ -106,6 +104,7 @@ function GameController(playerOne, playerTwo) {
     const info = document.querySelector(".info");
 
     function gameState(e) {
+        if(e.target['className'] == 'container') return;
         console.log(game.getActivePlayer().getPlayerSymbol());
         const col = Number.parseInt(e.target.dataset.col);
         const row = Number.parseInt(e.target.dataset.row);
@@ -120,7 +119,7 @@ function GameController(playerOne, playerTwo) {
             container.removeEventListener('click', gameState);
             return;
         }
-        
+
         if (game.getCounter() == 9) {
             info.textContent = `Draw`;
             container.removeEventListener('click', gameState);
