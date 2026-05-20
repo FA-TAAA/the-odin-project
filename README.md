@@ -1,0 +1,1 @@
+Each branch represesnts a project.
